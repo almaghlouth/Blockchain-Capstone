@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.5.2;
 
 import 'openzeppelin-solidity/contracts/utils/Address.sol';
 import 'openzeppelin-solidity/contracts/drafts/Counters.sol';
@@ -6,27 +6,75 @@ import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import 'openzeppelin-solidity/contracts/token/ERC721/IERC721Receiver.sol';
 import "./Oraclize.sol";
 
+//  TODO's
+//  1) create a private '_owner' variable of type address with a public getter function
+//  2) create an internal constructor that sets the _owner var to the creater of the contract
+//  3) create an 'onlyOwner' modifier that throws if called by any account other than the owner.
+//  4) fill out the transferOwnership function
+//  5) create an event that emits anytime ownerShip is transfered (including in the constructor)
+
 contract Ownable {
-    //  TODO's
-    //  1) create a private '_owner' variable of type address with a public getter function
-    //  2) create an internal constructor that sets the _owner var to the creater of the contract 
-    //  3) create an 'onlyOwner' modifier that throws if called by any account other than the owner.
-    //  4) fill out the transferOwnership function
-    //  5) create an event that emits anytime ownerShip is transfered (including in the constructor)
 
-    function transferOwnership(address newOwner) public onlyOwner {
-        // TODO add functionality to transfer control of the contract to a newOwner.
-        // make sure the new owner is a real address
+	address private _owner;
 
-    }
+	modifier onlyOwner()
+	{
+    	require(_owner == msg.sender || _owner == address(0), "Caller is not contract owner");
+    	_;
+	}
+
+	event OwnerChanged(address newOwner);
+
+	constructor () internal {
+    	transferOwnership(msg.sender);
+	}
+
+	function transferOwnership(address newOwner) public onlyOwner {
+    	// TODO add functionality to transfer control of the contract to a newOwner.
+    	// make sure the new owner is a real address
+    	_owner = newOwner;
+    	emit OwnerChanged(_owner);
+	}
 }
 
 //  TODO's: Create a Pausable contract that inherits from the Ownable contract
 //  1) create a private '_paused' variable of type bool
-//  2) create a public setter using the inherited onlyOwner modifier 
+//  2) create a public setter using the inherited onlyOwner modifier
 //  3) create an internal constructor that sets the _paused variable to false
 //  4) create 'whenNotPaused' & 'paused' modifier that throws in the appropriate situation
 //  5) create a Paused & Unpaused event that emits the address that triggered the event
+
+contract Pausable is Ownable {
+
+	bool private _paused;
+
+	modifier whenNotPaused()
+	{
+    	require(_paused == false, "The contract is paused");
+    	_;
+	}
+	modifier paused()
+	{
+    	require(_paused == true, "The contract is not paused");
+    	_;
+	}
+
+	event Paused(address newOwner);
+	event Unpaused(address newOwner);
+
+	constructor () internal {
+    	_paused = false;
+	}
+
+	function setStatus(bool _status) public onlyOwner {
+    	_paused = _status;
+    	if (_status == true) {
+        	emit Paused(msg.sender);
+    	} else if (_status == false) {
+        	emit Unpaused(msg.sender);
+    	}
+	}
+}
 
 contract ERC165 {
     bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
