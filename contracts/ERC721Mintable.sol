@@ -526,7 +526,7 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
         // see https://github.com/oraclize/ethereum-api/blob/master/oraclizeAPI_0.5.sol for strConcat()
     // require the token exists before setting
 
-    function _setTokenURI(uint256 tokenId, string memory uri) internal {
+    function _setTokenURI(uint256 tokenId) internal {
         require(_exists(tokenId), "Token number is not valid");
         _tokenURIs[tokenId] = strConcat(_baseTokenURI, uint2str(tokenId));
     }
@@ -546,7 +546,7 @@ contract CustomERC721Token is ERC721Metadata("Real Estate Exchange","REE","https
     function mint(address _from, uint _tokenId) public onlyOwner returns (bool) {
         require(super._exists(_tokenId) == false, "Token number is already in use");
         super._mint(_from,_tokenId);
-        super.setTokenURI(_tokenId);
+        super._setTokenURI(_tokenId);
         if (super._exists(_tokenId) == true){
             return true;
         } else {
