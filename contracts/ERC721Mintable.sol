@@ -543,11 +543,11 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 
 contract CustomERC721Token is ERC721Metadata("Real Estate Exchange","REE","https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/"){
 
-    function mint(address to, uint tokenId) public onlyOwner returns (bool) {
-        require(super._exists(tokenId) == false, "Token number is already in use");
-        super._mint(to,tokenId);
-        super.setTokenURI(tokenId);
-        if (super._exists(tokenId) == true){
+    function mint(address _from, uint _tokenId) public onlyOwner returns (bool) {
+        require(super._exists(_tokenId) == false, "Token number is already in use");
+        super._mint(_from,_tokenId);
+        super.setTokenURI(_tokenId);
+        if (super._exists(_tokenId) == true){
             return true;
         } else {
             return false;
