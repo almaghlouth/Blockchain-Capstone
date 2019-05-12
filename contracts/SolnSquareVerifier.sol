@@ -48,13 +48,13 @@ contract SolnSquareVerifier is CustomERC721Token, Verifier {
             uint[2] memory _a,
             uint[2][2] memory _b,
             uint[2] memory _c,
-            uint[2] memory _input) public 
+            uint[2] memory _input) public
             {
         bytes32 _value = keccak256(abi.encodePacked(_a,_b,_c, _input));
-        require(verifyTx(_a,_b,_c, _input) == true, "proof value is invlaid");
+        require(verifyTx(_a, _b, _c, _input) == true, "proof value is invlaid");
         require(solutions[_value].from == address(0), "solution already claimed");
-        setSolution(_from,_tokenId, _value);
-        super.mint(_from,_tokenId);
+        setSolution(_from, _tokenId, _value);
+        super.mint(_from, _tokenId);
     }
 
 
