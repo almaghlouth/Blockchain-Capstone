@@ -1,3 +1,4 @@
+var HDWalletProvider = require("truffle-hdwallet-provider");
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -52,7 +53,9 @@ module.exports = {
         // in this part fill your mnemonic and the infura link
         return new HDWalletProvider("", "https://rinkeby.infura.io/v3/");
       },
-      network_id: 1
+      network_id: 4,
+      gas: 6000000,
+      skipDryRun: true
     }
     // Another network with more advanced options...
     // advanced: {
