@@ -8,12 +8,12 @@ The entire code is inherted at the end in a single contract `SolnSquareVerifier`
 
 ## Demo and links
 
-- Token Contract Address: `0xE89777fA90de00bA8c3232cAF7a136Ae60EdCe93`
+- Token Contract Address: `0xa568a1F47E309C95f8b2DE2b7388055beda60823`
 - Token Name: `Real Estate Exchange`
 - Token Appreavation: `REE`
-- Token Link: https://rinkeby.etherscan.io/address/0xE89777fA90de00bA8c3232cAF7a136Ae60EdCe93
-- OpenSea Link: xxx
-- The ABIs are under ABI folder `\ABI\`
+- Token Link: https://rinkeby.etherscan.io/address/0xa568a1f47e309c95f8b2de2b7388055beda60823
+- OpenSea Link: https://rinkeby.opensea.io/category/realestateexchangev11
+- The ABIs are under ABI folder `.\ABI\` and mainly `.\ABI\SolnSquareVerifier.json`
 
 ## Setup and Inistall
 
@@ -31,11 +31,11 @@ The entire code is inherted at the end in a single contract `SolnSquareVerifier`
 1. `docker run -v <path to project folder>/zokrates/code/square:/home/zokrates/code -ti zokrates/zokrates /bin/bash`
    - In Windows it is better to be placed under users in c partition.
    - In Windows the path would be `/c/Users/XXXXX` with small c.
-2. `~/zokrates --proving-scheme pghr13 setup`
-3. `~/zokrates --proving-scheme pghr13 compute-witness -a x y`
+2. `~/zokrates setup --proving-scheme pghr13`
+3. `~/zokrates compute-witness -a x y`
    - x is any number and y should the square of x
    - Ex: 2 and 4, 3 and 9
-4. `~/zokrates --proving-scheme generate-proof`
+4. `~/zokrates generate-proof --proving-scheme pghr13`
    - Every re run of this code will create new proof without the need to change the witness.
    - 11 demos already created under `/zokrates/code/`
 
