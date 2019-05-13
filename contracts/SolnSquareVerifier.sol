@@ -45,13 +45,18 @@ contract SolnSquareVerifier is CustomERC721Token, Verifier {
 
     function mintToken (address _from,
             uint _tokenId,
-            uint[2] memory _a,
-            uint[2][2] memory _b,
-            uint[2] memory _c,
-            uint[2] memory _input) public
+            uint[2] memory a,
+            uint[2] memory a_p,
+            uint[2][2] memory b,
+            uint[2] memory b_p,
+            uint[2] memory c,
+            uint[2] memory c_p,
+            uint[2] memory h,
+            uint[2] memory k,
+            uint[2] memory input) public
             {
-        bytes32 _value = keccak256(abi.encodePacked(_a,_b,_c, _input));
-        require(verifyTx(_a, _b, _c, _input) == true, "proof value is invlaid");
+        bytes32 _value = keccak256(abi.encodePacked(a, a_p, b, b_p, c, c_p, h, k, input));
+        require(verifyTx(a, a_p, b, b_p, c, c_p, h, k, input) == true, "proof value is invlaid");
         require(solutions[_value].from == address(0), "solution already claimed");
         setSolution(_from, _tokenId, _value);
         super.mint(_from, _tokenId);
